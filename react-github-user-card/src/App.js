@@ -1,13 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 import './App.css';
-import './components/UserCard'
+import UserCard from './components/UserCard'
 
 class App extends React.Component {
   state = {
     userData:{},
     userName:''
   }
+   
 
   fetchUser = (user) => {
     axios.get(`https://api.github.com/users/${user}`)
@@ -45,7 +46,7 @@ class App extends React.Component {
           />
         </form>
         <div className='UserCard'>
-          <UserCard userData={userData}/>
+          <UserCard userData={this.state.userData}/>
         </div>
       </div>
     );
