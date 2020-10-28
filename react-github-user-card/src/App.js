@@ -2,10 +2,12 @@ import React from 'react'
 import axios from 'axios'
 import './App.css';
 import UserCard from './components/UserCard'
+import Followers from './components/Followers'
 
 class App extends React.Component {
   state = {
     userData:{},
+    followersData:{},
     userName:''
   }
    
@@ -20,13 +22,26 @@ class App extends React.Component {
       })
       .catch(err => {
         console.log('axios error',err);
-        
+      })
+  }
+
+  fetchFollowers = (user) => {
+    axios.get(`https://api.github.com/users/${user}/followers`)
+      .then(res => {
+        console.log('axios response', res);
+        this.setState({
+          followerData:res.data
+        })
+      })
+      .catch(err => {
+        console.log('axios error',err);
       })
   }
 
   handleSearch = (e) => {
     e.preventDefault()
     this.fetchUser(this.state.userName)
+    this.fetchFollowers(this.state.userName)
     this.setState({userName:''})
   }
 
@@ -36,7 +51,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='AppContainer'>
+      <div className='App'>
         <h1>Hello github</h1>
         <form onSubmit={this.handleSearch}>
           <input 
@@ -45,8 +60,9 @@ class App extends React.Component {
             onChange={this.handleChange}
           />
         </form>
-        <div className='UserCard'>
+        <div className='Cards'>
           <UserCard userData={this.state.userData}/>
+          <Followers followersData={this.state.followersData}/>
         </div>
       </div>
     );
