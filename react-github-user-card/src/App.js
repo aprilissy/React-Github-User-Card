@@ -7,7 +7,7 @@ import Followers from './components/Followers'
 class App extends React.Component {
   state = {
     userData:{},
-    followersData:{},
+    followersData:[],
     userName:''
   }
    
@@ -15,26 +15,26 @@ class App extends React.Component {
   fetchUser = (user) => {
     axios.get(`https://api.github.com/users/${user}`)
       .then(res => {
-        console.log('axios response', res);
+        console.log('User axios response', res);
         this.setState({
           userData:res.data
         })
       })
       .catch(err => {
-        console.log('axios error',err);
+        console.log('User axios error',err);
       })
   }
 
   fetchFollowers = (user) => {
     axios.get(`https://api.github.com/users/${user}/followers`)
       .then(res => {
-        console.log('axios response', res);
+        console.log('Followers axios response', res);
         this.setState({
-          followerData:res.data
+          followersData:res.data
         })
       })
       .catch(err => {
-        console.log('axios error',err);
+        console.log('Followers axios error',err);
       })
   }
 
@@ -50,6 +50,9 @@ class App extends React.Component {
   }
 
   render() {
+    
+    console.log('followersData', this.state.followersData)
+    console.log('userData', this.state.userData)
     return (
       <div className='App'>
         <h1>Hello github</h1>
@@ -62,7 +65,11 @@ class App extends React.Component {
         </form>
         <div className='Cards'>
           <UserCard userData={this.state.userData}/>
-          <Followers followersData={this.state.followersData}/>
+
+          {this.state.followersData.map(follower => (
+            <Followers follower={follower} key={follower.id}/>
+          ))}
+
         </div>
       </div>
     );
