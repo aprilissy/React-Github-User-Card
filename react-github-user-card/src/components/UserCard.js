@@ -7,7 +7,6 @@ const UserCard = (params) => {
   <div className='allUsers'>
     <div className="ui card">
       <div className="content">
-        <div className="right floated meta">Public Repos: {params.userData.public_repos}</div>
         <h2>{params.userData.name}</h2>
       </div>
       <div className="image">
@@ -18,7 +17,8 @@ const UserCard = (params) => {
         <h3>GitHub Username: {params.userData.login} </h3>
         </span>
         <h3>Followers: {params.userData.followers}</h3>
-        <h3>Following:{params.userData.following} </h3>
+        <h3>Following: {params.userData.following} </h3>
+        <h3>Public Repos: {params.userData.public_repos}</h3>
       </div>
     </div>
   </div>

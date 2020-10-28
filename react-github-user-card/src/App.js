@@ -55,7 +55,7 @@ class App extends React.Component {
     console.log('userData', this.state.userData)
     return (
       <div className='App'>
-        <h1>Hello github</h1>
+        <h1>Search GitHub Users</h1>
         <form onSubmit={this.handleSearch}>
           <input 
             type='text'
@@ -65,9 +65,9 @@ class App extends React.Component {
         </form>
         <div className='Cards'>
           <UserCard userData={this.state.userData}/>
-
+          
           {this.state.followersData.map(follower => (
-            <Followers follower={follower} key={follower.id}/>
+            <Followers follower={follower} key={follower.id} userData={this.state.userData.name}/>
           ))}
 
         </div>
